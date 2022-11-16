@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">CrowTest</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="Lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent a lorem sed leo vulputate placerat. Pellentesque lobortis non felis in fringilla.</string>
+</resources>
