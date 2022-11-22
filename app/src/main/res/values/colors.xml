@@ -18,4 +18,8 @@
     <color name="good_mark">#3300FF00</color>
     <color name="satisfying_mark">#33FFFF00</color>
     <color name="bad_mark">#33FF0000</color>
+    <color name="question_number_back">#ABAFE8</color>
+
+    <color name="solved_question">#121735</color>
+    <color name="unsolved_question">#FFFFFF</color>
 </resources>

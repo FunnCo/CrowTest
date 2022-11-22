@@ -11,6 +11,7 @@ import com.funnco.crowtest.R
 import com.funnco.crowtest.activity.auth.login.LoginActivity
 import com.funnco.crowtest.common.utils.SharedPreferencesUtils
 import com.funnco.crowtest.common.utils.WindowUtils
+import com.funnco.crowtest.databinding.CustomQuestionNumberBinding
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +26,7 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
         setContentView(R.layout.activity_splash)
+
 
 //         Позже сделаю нормальный splash
         Handler().postDelayed({
