@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.funnco.crowtest.activity.test.question.*
 import com.funnco.crowtest.common.model.question_models.BaseQuestion
+import com.funnco.crowtest.common.model.question_models.InputQuestion
 
 class QuestionsAdapter(
     val listOfQuestions: List<BaseQuestion>,
@@ -37,7 +38,7 @@ class QuestionsAdapter(
                 MultipleCorrectQuestionFragment()
             }
             "input_answer" -> {
-                InputQuestionFragment()
+                InputQuestionFragment(listOfQuestions[position] as InputQuestion)
             }
             else -> {
                 AccordanceQuestionFragment()
