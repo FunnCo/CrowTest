@@ -1,5 +1,6 @@
 package com.funnco.crowtest.activity.test
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,14 +26,26 @@ class QuestionNumberAdapter(private val questionsAdapter: QuestionsAdapter, val 
             }
 
             if(isOpened){
+                binding.root.setCardBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.card_back))
+                binding.itemQuestionNumber.setTextColor(ContextCompat.getColor(binding.root.context, R.color.solved_question))
                 binding.root.strokeWidth = 8
             } else {
                 binding.root.strokeWidth = 0
             }
 
             if(item.isAnswered && !isOpened){
+                Log.i(this.javaClass.simpleName,"Changed to answered type at position: $position")
                 binding.root.setCardBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.solved_question))
+                binding.itemQuestionNumber.setTextColor(ContextCompat.getColor(binding.root.context, R.color.unsolved_question))
             }
+
+            if(!item.isAnswered){
+                Log.i(this.javaClass.simpleName,"Changed to answered type at position: $position")
+                binding.root.setCardBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.card_back))
+                binding.itemQuestionNumber.setTextColor(ContextCompat.getColor(binding.root.context, R.color.solved_question))
+            }
+
+
         }
     }
 

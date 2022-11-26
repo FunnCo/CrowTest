@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_marginHorizontal="16dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:padding="12dp"
         app:cardCornerRadius="12dp"
         app:layout_constrainedHeight="true"
@@ -48,6 +48,7 @@
         app:layout_constraintStart_toStartOf="parent" >
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/fragment_question_etxt_answer"
                 android:layout_width="match_parent"
                 style="@style/MyDesignTextView"
                 android:textSize="8pt"

@@ -10,264 +10,58 @@ object Repository {
             listOf(
                 OneAnswerQuestion(
                     "Выберите правильный вариант ответ",
-                    null,
+                    "one_answer",
                     listOf(
                         AnswerModel(
-                            null,
                             "1 вариант ответа"
                         ),
                         AnswerModel(
-                            null,
                             "2 вариант ответа"
                         ),
                         AnswerModel(
-                            null,
                             "3 вариант ответа"
                         ),
                         AnswerModel(
-                            null,
                             "4 вариант ответа"
                         ),
                     ),
-                    "one_answer"
-                ),
-                OneAnswerQuestion(
-                    "Выберите правильный вариант ответ",
-                    null,
-                    listOf(
-                        AnswerModel(
-                            null,
-                            "1 вариант ответа"
-                        ),
-                        AnswerModel(
-                            null,
-                            "2 вариант ответа"
-                        ),
-                        AnswerModel(
-                            null,
-                            "3 вариант ответа"
-                        ),
-                        AnswerModel(
-                            null,
-                            "4 вариант ответа"
-                        ),
-                    ),
-                    "one_answer"
-                ),
-                OneAnswerQuestion(
-                    "Выберите правильный вариант ответ",
-                    null,
-                    listOf(
-                        AnswerModel(
-                            null,
-                            "1 вариант ответа"
-                        ),
-                        AnswerModel(
-                            null,
-                            "2 вариант ответа"
-                        ),
-                        AnswerModel(
-                            null,
-                            "3 вариант ответа"
-                        ),
-                        AnswerModel(
-                            null,
-                            "4 вариант ответа"
-                        ),
-                    ),
-                    "one_answer"
-                ),
-                OneAnswerQuestion(
-                    "Выберите правильный вариант ответ",
-                    null,
-                    listOf(
-                        AnswerModel(
-                            null,
-                            "1 вариант ответа"
-                        ),
-                        AnswerModel(
-                            null,
-                            "2 вариант ответа"
-                        ),
-                        AnswerModel(
-                            null,
-                            "3 вариант ответа"
-                        ),
-                        AnswerModel(
-                            null,
-                            "4 вариант ответа"
-                        ),
-                    ),
-                    "one_answer"
-                ),
-                OneAnswerQuestion(
-                    "Выберите правильный вариант ответ",
-                    null,
-                    listOf(
-                        AnswerModel(
-                            null,
-                            "1 вариант ответа"
-                        ),
-                        AnswerModel(
-                            null,
-                            "2 вариант ответа"
-                        ),
-                        AnswerModel(
-                            null,
-                            "3 вариант ответа"
-                        ),
-                        AnswerModel(
-                            null,
-                            "4 вариант ответа"
-                        ),
-                    ),
-                    "one_answer"
-                ),
-                OneAnswerQuestion(
-                    "Выберите правильный вариант ответ",
-                    null,
-                    listOf(
-                        AnswerModel(
-                            null,
-                            "1 вариант ответа"
-                        ),
-                        AnswerModel(
-                            null,
-                            "2 вариант ответа"
-                        ),
-                        AnswerModel(
-                            null,
-                            "3 вариант ответа"
-                        ),
-                        AnswerModel(
-                            null,
-                            "4 вариант ответа"
-                        ),
-                    ),
-                    "one_answer"
-                ),
-                OneAnswerQuestion(
-                    "Выберите правильный вариант ответ",
-                    null,
-                    listOf(
-                        AnswerModel(
-                            null,
-                            "1 вариант ответа"
-                        ),
-                        AnswerModel(
-                            null,
-                            "2 вариант ответа"
-                        ),
-                        AnswerModel(
-                            null,
-                            "3 вариант ответа"
-                        ),
-                        AnswerModel(
-                            null,
-                            "4 вариант ответа"
-                        ),
-                    ),
-                    "one_answer"
-                ),
-                OneAnswerQuestion(
-                    "Выберите правильный вариант ответ",
-                    null,
-                    listOf(
-                        AnswerModel(
-                            null,
-                            "1 вариант ответа"
-                        ),
-                        AnswerModel(
-                            null,
-                            "2 вариант ответа"
-                        ),
-                        AnswerModel(
-                            null,
-                            "3 вариант ответа"
-                        ),
-                        AnswerModel(
-                            null,
-                            "4 вариант ответа"
-                        ),
-                    ),
-                    "one_answer"
-                ),
-                OneAnswerQuestion(
-                    "Выберите правильный вариант ответ",
-                    null,
-                    listOf(
-                        AnswerModel(
-                            null,
-                            "1 вариант ответа"
-                        ),
-                        AnswerModel(
-                            null,
-                            "2 вариант ответа"
-                        ),
-                        AnswerModel(
-                            null,
-                            "3 вариант ответа"
-                        ),
-                        AnswerModel(
-                            null,
-                            "4 вариант ответа"
-                        ),
-                    ),
-                    "one_answer"
-                ),
-                OneAnswerQuestion(
-                    "Выберите правильный вариант ответ",
-                    null,
-                    listOf(
-                        AnswerModel(
-                            null,
-                            "1 вариант ответа"
-                        ),
-                        AnswerModel(
-                            null,
-                            "2 вариант ответа"
-                        ),
-                        AnswerModel(
-                            null,
-                            "3 вариант ответа"
-                        ),
-                        AnswerModel(
-                            null,
-                            "4 вариант ответа"
-                        ),
-                    ),
-                    "one_answer"
                 ),
                 MultipleAnswerQuestion(
-                    "Выберите вес правильные варианты ответа",
+                    "Выберите всe правильные варианты ответа",
                     "multiple_answer",
-                    null,
                     listOf(
                         AnswerModel(
-                            null,
                             "1 вариант ответа"
                         ),
                         AnswerModel(
-                            null,
                             "2 вариант ответа"
                         ),
                         AnswerModel(
-                            null,
                             "3 вариант ответа"
                         ),
                         AnswerModel(
-                            null,
                             "4 вариант ответа"
                         ),
                     )
                 ),
+
                 InputQuestion(
                     "Введите правильный ответ",
                     "input_answer",
-                    null
                 ),
                 AccordanceQuestion(
-                    "accordance_answer"
+                    "Расположите события по соотвествующим им годам",
+                    "accordance_answer",
+                    listOf<AnswerModel>(
+                        AnswerModel("Великая отечественная война"),
+                        AnswerModel("Путч и еще немного длинных слов для большой карточки"),
+                        AnswerModel("Отечественная война"),
+                    ),
+                    listOf<AnswerModel>(
+                        AnswerModel("1812"),
+                        AnswerModel("1991"),
+                        AnswerModel("1039"),
+                    ),
                 )
             )
         )

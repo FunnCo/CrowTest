@@ -22,4 +22,6 @@
 
     <color name="unsolved_question">#121735</color>
     <color name="solved_question">#FFFFFF</color>
+
+    <color name="card_back">#3C3F4C</color>
 </resources>

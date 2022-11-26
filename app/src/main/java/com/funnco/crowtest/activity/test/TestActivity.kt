@@ -7,6 +7,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
+import com.funnco.crowtest.activity.test.question.CurrentTest
 import com.funnco.crowtest.databinding.ActivityTestBinding
 import com.funnco.crowtest.repository.Repository
 
@@ -28,8 +29,11 @@ class TestActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         Repository.loadQuestions("uuid1") {questions ->
+
+            CurrentTest.attachTestModel(questions)
+
             val questionsAdapter = QuestionsAdapter(
-                questions,
+                CurrentTest.getInstanceOfTest().listOfQuestions,
                 supportFragmentManager,
                 binding.activityTestRcQuestionNumber,
                 lifecycle

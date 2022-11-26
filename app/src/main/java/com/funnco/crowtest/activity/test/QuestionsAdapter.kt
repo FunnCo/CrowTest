@@ -1,15 +1,13 @@
 package com.funnco.crowtest.activity.test
 
 
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.funnco.crowtest.activity.test.question.*
-import com.funnco.crowtest.common.model.question_models.BaseQuestion
-import com.funnco.crowtest.common.model.question_models.InputQuestion
+import com.funnco.crowtest.common.model.question_models.*
 
 class QuestionsAdapter(
     val listOfQuestions: List<BaseQuestion>,
@@ -32,16 +30,16 @@ class QuestionsAdapter(
     override fun createFragment(position: Int): Fragment {
         return when (listOfQuestions[position].type) {
             "one_answer" -> {
-                OneCorrectQuestionFragment()
+                OneCorrectQuestionFragment(listOfQuestions[position] as OneAnswerQuestion, position)
             }
             "multiple_answer" -> {
-                MultipleCorrectQuestionFragment()
+                MultipleCorrectQuestionFragment(listOfQuestions[position] as MultipleAnswerQuestion, position)
             }
             "input_answer" -> {
-                InputQuestionFragment(listOfQuestions[position] as InputQuestion)
+                InputQuestionFragment(listOfQuestions[position] as InputQuestion, position)
             }
             else -> {
-                AccordanceQuestionFragment()
+                AccordanceQuestionFragment(listOfQuestions[position] as AccordanceQuestion, position)
             }
         }
     }

@@ -4,7 +4,6 @@ import com.funnco.crowtest.common.model.AnswerModel
 
 class OneAnswerQuestion(
     val task: String,
-    val listOfImages: List<String>?,
-    val answers: List<AnswerModel>,
     type: String,
+    val answers: List<AnswerModel>,
 ): BaseQuestion(type)
