@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.funnco.crowtest.R
 import com.funnco.crowtest.activity.test_details.TestDetailsActivity
+import com.funnco.crowtest.activity.test_result.TestResultActivity
 import com.funnco.crowtest.common.model.TestModel
 import com.funnco.crowtest.databinding.ItemFinishedTestBinding
 import com.squareup.picasso.Picasso
@@ -30,7 +31,7 @@ class FinishedTestsAdapter(val listOfItems: List<TestModel>) :
                 binding.root.context.startActivity(
                     Intent(
                         binding.root.context,
-                        TestDetailsActivity::class.java
+                        TestResultActivity::class.java
                     )
                 )
             }

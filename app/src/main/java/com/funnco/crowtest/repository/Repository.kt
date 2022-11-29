@@ -5,7 +5,10 @@ import com.funnco.crowtest.common.model.TestModel
 import com.funnco.crowtest.common.model.question_models.*
 
 object Repository {
-    fun loadQuestions(testId: String, response: (List<BaseQuestion>) -> Unit) {
+
+    lateinit var downLoadedTests: List<TestModel>
+
+    fun loadQuestions(testId: String, response: (questions: List<BaseQuestion>, test: TestModel) -> Unit) {
         response(
             listOf(
                 OneAnswerQuestion(
@@ -63,54 +66,75 @@ object Repository {
                         AnswerModel("1039"),
                     ),
                 )
+            ),
+            TestModel(
+                "uuid1",
+                "Параллельность плоскостей",
+                "Самостоятельная работа по теме параллельность плоскостей",
+                "01.12.2022",
+                "01.12.2022",
+                null,
+                null,
+                1,
+                null
             )
         )
     }
 
+    fun getTestById(testId: String, response: (TestModel) -> Unit){
+        response(downLoadedTests.find { it.id == testId }!!)
+    }
+
     fun loadAvailableTests(response: (List<TestModel>) -> Unit) {
+        downLoadedTests = listOf(
+            TestModel(
+                "uuid1",
+                "Параллельность плоскостей",
+                "Самостоятельная работа по теме параллельность плоскостей",
+                "01.12.2022",
+                "05.12.2022",
+                null,
+                null,
+                30,
+                null
+            ),
+            TestModel(
+                "uuid2",
+                "Физкультура",
+                "Разминка и подборка упражнений №5",
+                "20.11.2022",
+                "25.11.2022",
+                null,
+                null,
+                40,
+                null
+            ),
+            TestModel(
+                "uuid3",
+                "С++, циклы",
+                "Проверочный тест",
+                "01.12.2022",
+                "02.12.2022",
+                null,
+                null,
+                15,
+                null
+            ),
+            TestModel(
+                "uuid4",
+                "Геном человека",
+                "Домашняя работа по параграфу 12",
+                "15.01.2023",
+                "13.01.2023",
+                null,
+                null,
+                20,
+                null
+            ),
+        )
+
         response(
-            listOf(
-                TestModel(
-                    "uuid1",
-                    "Параллельность плоскостей",
-                    "Самостоятельная работа по теме параллельность плоскостей",
-                    "01.12.2022",
-                    null,
-                    null,
-                    30,
-                    null
-                ),
-                TestModel(
-                    "uuid2",
-                    "Физкультура",
-                    "Разминка и подборка упражнений №5",
-                    "20.11.2022",
-                    null,
-                    null,
-                    40,
-                    null
-                ),
-                TestModel(
-                    "uuid3",
-                    "С++, циклы",
-                    "Проверочный тест",
-                    "01.12.2022",
-                    null,
-                    null,
-                    15,
-                    null
-                ),
-                TestModel(
-                    "uuid4",
-                    "Геном человека",
-                    "Домашняя работа по параграфу 12",
-                    "15.01.2023",
-                    null,
-                    null,
-                    20,
-                    null
-                ),
-            )
+            downLoadedTests
         )
     }
 
@@ -123,6 +147,7 @@ object Repository {
                     "Самостоятельная работа по теме параллельность плоскостей",
                     "01.12.2022",
                     "01.12.2022",
+                    "01.12.2022",
                     "5",
                     30,
                     11f
@@ -131,6 +156,7 @@ object Repository {
                     "uuid2",
                     "Физкультура",
                     "Разминка и подборка упражнений №5",
+                    "20.11.2022",
                     "20.11.2022",
                     "01.12.2022",
                     "2",
@@ -143,6 +169,7 @@ object Repository {
                     "Проверочный тест",
                     "01.12.2022",
                     "01.12.2022",
+                    "01.12.2022",
                     "3",
                     15,
                     12.4f
@@ -151,6 +178,7 @@ object Repository {
                     "uuid4",
                     "Геном человека",
                     "Домашняя работа по параграфу 12",
+                    "15.01.2023",
                     "15.01.2023",
                     "15.01.2023",
                     "4",

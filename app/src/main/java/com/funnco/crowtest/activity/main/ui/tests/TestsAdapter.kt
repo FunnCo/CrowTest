@@ -25,7 +25,9 @@ class TestsAdapter(val listOfItems: List<TestModel>) : Adapter<TestsAdapter.Avai
             binding.itemTestSoveTime.text = "Время прохождения: ${item.timeForSolving} мин"
 
             binding.root.setOnClickListener {
-                binding.root.context.startActivity(Intent(binding.root.context, TestDetailsActivity::class.java))
+                val intent = Intent(binding.root.context, TestDetailsActivity::class.java)
+                intent.putExtra("test_id", item.id)
+                binding.root.context.startActivity(intent)
             }
         }
 

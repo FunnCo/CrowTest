@@ -3,7 +3,7 @@ package com.funnco.crowtest.activity.test
 import android.util.Log
 
 class SelectedPosition(
-    val changeListener: ChangeListener
+    private val changeListener: ChangeListener
 ) {
     var position: Int = 0
         set(value) {

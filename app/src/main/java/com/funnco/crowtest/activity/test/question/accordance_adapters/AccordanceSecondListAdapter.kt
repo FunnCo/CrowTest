@@ -19,6 +19,7 @@ class AccordanceSecondListAdapter(
             binding = ItemAccrodanceTaskBinding.bind(itemView)
             binding.itemTxtAccordanceAnswerContent.text = item.content
 
+
             binding.root.measure(View.MeasureSpec.UNSPECIFIED,View.MeasureSpec.UNSPECIFIED)
 
             val extraPadding = heightToAdjust - binding.root.measuredHeight

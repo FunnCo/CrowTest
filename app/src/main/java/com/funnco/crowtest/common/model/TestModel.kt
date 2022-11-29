@@ -5,6 +5,7 @@ class TestModel(
     val heading : String,
     val description: String,
     val deadlineDate: String,
+    val startDate: String,
     val solveDate: String?,
     val mark: String?,
     val timeForSolving: Int,

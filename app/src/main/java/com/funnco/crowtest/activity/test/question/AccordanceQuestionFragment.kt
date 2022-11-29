@@ -69,6 +69,7 @@ class AccordanceQuestionFragment(private val question: AccordanceQuestion, val p
                     ItemTouchHelper.ACTION_STATE_IDLE -> {
                         binding.recyclerView2.adapter = AccordanceSecondListAdapter(question.secondListOfAnswers, binding.recyclerView)
                         question.isAnswered = true
+                        CurrentTest.getInstanceOfTest().answerAtQuestion(question.secondListOfAnswers, pos)
                     }
                 }
             }

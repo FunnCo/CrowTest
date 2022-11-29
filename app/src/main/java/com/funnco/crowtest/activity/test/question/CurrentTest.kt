@@ -6,6 +6,12 @@ import com.funnco.crowtest.common.model.question_models.*
 class CurrentTest private constructor(){
 
     lateinit var listOfQuestions: List<BaseQuestion>
+    lateinit var listener: OnWriteListener
+
+    fun answerAtQuestion(answers: List<AnswerModel>, numberOfQuestion: Int ) {
+        writeAnswer(answers, listOfQuestions[numberOfQuestion] as AccordanceQuestion)
+        listener.onWrite()
+    }
 
     fun answerAtQuestion(answer: AnswerModel?, numberOfQuestion: Int ) {
         when (listOfQuestions[numberOfQuestion].type) {
@@ -25,18 +31,27 @@ class CurrentTest private constructor(){
         question.answers.find { it.content == answer.content }!!.isSelected = true
         question.answers.find { it.content != answer.content }!!.isSelected = false
         question.isAnswered = true
+        listener.onWrite()
+    }
+
+    private fun writeAnswer(answers: List<AnswerModel>, question: AccordanceQuestion){
+        question.isAnswered = true
+        question.secondListOfAnswers = answers
+        listener.onWrite()
     }
 
     private fun writeAnswer(answer: AnswerModel, question: MultipleAnswerQuestion){
         val answerModel = question.answers.find { it.content == answer.content }
         answerModel!!.isSelected = !answerModel.isSelected
         question.isAnswered = !question.answers.all { !it.isSelected }
+        listener.onWrite()
     }
 
     private fun writeAnswer(answer: AnswerModel?, question: InputQuestion){
         question.answer = answer
         if(question.answer != null){
             question.isAnswered = true
+            listener.onWrite()
         }
     }
 
@@ -54,17 +69,19 @@ class CurrentTest private constructor(){
             getInstanceOfTest().listOfQuestions = test
         }
 
-        fun nullifyInstance(){
-            instance = null
+        fun attachListener(newListener: OnWriteListener){
+            getInstanceOfTest().listener = newListener
         }
     }
 
+    interface OnWriteListener{
+        fun onWrite()
+    }
 
 
     /** TODO: Остановился здесь, делай дальше отсюда.
      *
      *  TODO: Надо сделать сохранение выбранных ответов сюда
-     *  TODO: Надо сделать отображение вариантов ответов во фрагментах
      *  TODO: Надо сделать отображение времени прохождения в деталях теста
      *  TODO: Надо сделать отображение оставшегося времени в прохождении теста
      *  TODO: Надо сделать включение и выключения кнопки "Завершить тест" при ответе на все вопросы
