@@ -28,19 +28,20 @@ class FinishedTestsAdapter(val listOfItems: List<TestModel>) :
             binding.txtItemTestMark.text = item.mark
 
             binding.root.setOnClickListener {
-                binding.root.context.startActivity(
-                    Intent(
-                        binding.root.context,
-                        TestResultActivity::class.java
-                    )
+
+                val intent = Intent(
+                    binding.root.context,
+                    TestResultActivity::class.java
                 )
+                intent.putExtra("test_id", item.id)
+                binding.root.context.startActivity(intent)
             }
 
 
             binding.materialCardView.setCardBackgroundColor(
                 ContextCompat.getColor(
                     binding.root.context,
-                    when(item.mark!!.toInt()){
+                    when (item.mark!!.toInt()) {
                         5 -> R.color.excellent_mark
                         4 -> R.color.good_mark
                         3 -> R.color.satisfying_mark

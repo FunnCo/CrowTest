@@ -1,6 +1,5 @@
 package com.funnco.crowtest.activity.test
 
-import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,7 +8,6 @@ import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
-import com.funnco.crowtest.activity.main.MainActivity
 import com.funnco.crowtest.activity.test.question.CurrentTest
 import com.funnco.crowtest.activity.test_result.TestResultActivity
 import com.funnco.crowtest.databinding.ActivityTestBinding
@@ -19,6 +17,7 @@ import java.util.*
 
 class TestActivity : AppCompatActivity() {
     lateinit var binding: ActivityTestBinding
+    private var solveTime = 0f
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTestBinding.inflate(layoutInflater)
@@ -33,12 +32,15 @@ class TestActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
 
+
+
         Repository.loadQuestions("uuid1") { questions, test ->
 
             val countDown = object : CountDownTimer((test.timeForSolving * 60000).toLong(), 1000) {
                 override fun onTick(p0: Long) {
                     val formatter = SimpleDateFormat("mm:ss")
                     binding.activityTestTxtTime.setText(formatter.format(Date(p0)))
+                    solveTime += 1000
                 }
 
                 override fun onFinish() {
@@ -53,7 +55,8 @@ class TestActivity : AppCompatActivity() {
                 finishTest(false)
             }
 
-            CurrentTest.attachTestModel(questions)
+            CurrentTest.attachQuestions(questions)
+            CurrentTest.attachQuestions(test)
 
             val questionsAdapter = QuestionsAdapter(
                 CurrentTest.getInstanceOfTest().listOfQuestions,
@@ -103,16 +106,22 @@ class TestActivity : AppCompatActivity() {
 
     fun finishTest(isTimeExceeded: Boolean) {
         // TODO: Доделать отправку результатов теста, в том числе и в репозитории
+        val test = CurrentTest.getInstanceOfTest().test
         if (isTimeExceeded) {
+            test.timeUsedToSolve = test.timeForSolving.toFloat()
             AlertDialog.Builder(this).setTitle("Завершение теста")
                 .setMessage("К сожалению, время отведенное на выполнение теста вышло. Будут засчитаны только те ответы, которые вы успели ввести.")
-                .setNeutralButton("ОК") { p0, p1 ->
-                    startActivity(Intent(this@TestActivity, MainActivity::class.java))
-                    finish()
-                }.show()
+                .show()
         } else {
-            startActivity(Intent(this, TestResultActivity::class.java))
+            test.timeUsedToSolve = solveTime/60000f
+        }
+
+        val resultIntent = Intent(this, TestResultActivity::class.java)
+        resultIntent.putExtra("test_id", test.id)
+        Repository.sendAnswers(test.id, CurrentTest.getInstanceOfTest().listOfQuestions){
+            startActivity(resultIntent)
             finish()
         }
+
     }
 }

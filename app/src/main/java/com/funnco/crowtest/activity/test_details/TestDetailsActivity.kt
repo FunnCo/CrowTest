@@ -25,6 +25,7 @@ class TestDetailsActivity : AppCompatActivity() {
         binding.btnDetailsStart.setOnClickListener {
             // TODO: Передавать id теста
             startActivity(Intent(this, TestActivity::class.java))
+            finish()
         }
 
         val testId = intent.getStringExtra("test_id")

@@ -9,7 +9,7 @@ class TestModel(
     val solveDate: String?,
     val mark: String?,
     val timeForSolving: Int,
-    val timeUsedToSolve: Float?
+    var timeUsedToSolve: Float?
 
     // Сами вопросы будут приходить отдельно
 )

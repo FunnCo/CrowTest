@@ -1,12 +1,14 @@
 package com.funnco.crowtest.activity.test.question
 
 import com.funnco.crowtest.common.model.AnswerModel
+import com.funnco.crowtest.common.model.TestModel
 import com.funnco.crowtest.common.model.question_models.*
 
 class CurrentTest private constructor(){
 
     lateinit var listOfQuestions: List<BaseQuestion>
     lateinit var listener: OnWriteListener
+    lateinit var test: TestModel
 
     fun answerAtQuestion(answers: List<AnswerModel>, numberOfQuestion: Int ) {
         writeAnswer(answers, listOfQuestions[numberOfQuestion] as AccordanceQuestion)
@@ -65,13 +67,18 @@ class CurrentTest private constructor(){
             return instance!!
         }
 
-        fun attachTestModel(test: List<BaseQuestion>) {
+        fun attachQuestions(test: List<BaseQuestion>) {
             getInstanceOfTest().listOfQuestions = test
         }
 
         fun attachListener(newListener: OnWriteListener){
             getInstanceOfTest().listener = newListener
         }
+
+        fun attachQuestions(currentTest: TestModel){
+            getInstanceOfTest().test = currentTest
+        }
+
     }
 
     interface OnWriteListener{
@@ -81,11 +88,8 @@ class CurrentTest private constructor(){
 
     /** TODO: Остановился здесь, делай дальше отсюда.
      *
-     *  TODO: Надо сделать сохранение выбранных ответов сюда
-     *  TODO: Надо сделать отображение времени прохождения в деталях теста
-     *  TODO: Надо сделать отображение оставшегося времени в прохождении теста
-     *  TODO: Надо сделать включение и выключения кнопки "Завершить тест" при ответе на все вопросы
      *  TODO: Надо сделать диалог с подтверждением при нажатии кнопки назад в тесте
+     *  TODO: Надо сделать отправку данных в репозиторий отсюда
      */
 
 

@@ -18,7 +18,7 @@ class AccordanceSecondListAdapter(
         fun bind(item: AnswerModel, heightToAdjust: Int) {
             binding = ItemAccrodanceTaskBinding.bind(itemView)
             binding.itemTxtAccordanceAnswerContent.text = item.content
-
+            binding.itemOmgAccordanceDrag.visibility = View.VISIBLE
 
             binding.root.measure(View.MeasureSpec.UNSPECIFIED,View.MeasureSpec.UNSPECIFIED)
 

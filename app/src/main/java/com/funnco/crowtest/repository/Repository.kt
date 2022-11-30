@@ -8,7 +8,26 @@ object Repository {
 
     lateinit var downLoadedTests: List<TestModel>
 
-    fun loadQuestions(testId: String, response: (questions: List<BaseQuestion>, test: TestModel) -> Unit) {
+    fun sendAnswers(testId: String, questions: List<BaseQuestion>, response: (TestModel) -> Unit) {
+        response(
+            TestModel(
+                "uuid1",
+                "Параллельность плоскостей",
+                "Самостоятельная работа по теме параллельность плоскостей",
+                "01.12.2022",
+                "01.12.2022",
+                "01.12.2022",
+                "5",
+                25,
+                15.3f
+            )
+        )
+    }
+
+    fun loadQuestions(
+        testId: String,
+        response: (questions: List<BaseQuestion>, test: TestModel) -> Unit
+    ) {
         response(
             listOf(
                 OneAnswerQuestion(
@@ -81,61 +100,19 @@ object Repository {
         )
     }
 
-    fun getTestById(testId: String, response: (TestModel) -> Unit){
+    fun getTestById(testId: String, response: (TestModel) -> Unit) {
         response(downLoadedTests.find { it.id == testId }!!)
     }
 
     fun loadAvailableTests(response: (List<TestModel>) -> Unit) {
-        downLoadedTests = listOf(
-            TestModel(
-                "uuid1",
-                "Параллельность плоскостей",
-                "Самостоятельная работа по теме параллельность плоскостей",
-                "01.12.2022",
-                "05.12.2022",
-                null,
-                null,
-                30,
-                null
-            ),
-            TestModel(
-                "uuid2",
-                "Физкультура",
-                "Разминка и подборка упражнений №5",
-                "20.11.2022",
-                "25.11.2022",
-                null,
-                null,
-                40,
-                null
-            ),
-            TestModel(
-                "uuid3",
-                "С++, циклы",
-                "Проверочный тест",
-                "01.12.2022",
-                "02.12.2022",
-                null,
-                null,
-                15,
-                null
-            ),
-            TestModel(
-                "uuid4",
-                "Геном человека",
-                "Домашняя работа по параграфу 12",
-                "15.01.2023",
-                "13.01.2023",
-                null,
-                null,
-                20,
-                null
-            ),
-        )
 
-        response(
-            downLoadedTests
-        )
+        loadDoneTests {
+            downLoadedTests = it
+            response(
+                downLoadedTests
+            )
+        }
+
     }
 
     fun loadDoneTests(response: (List<TestModel>) -> Unit) {
