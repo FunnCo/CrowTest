@@ -124,4 +124,9 @@ class TestActivity : AppCompatActivity() {
         }
 
     }
+
+    override fun onStop() {
+        super.onStop()
+        finish()
+    }
 }

@@ -12,6 +12,17 @@
         android:id="@+id/btn_profile_night_mode"
         android:src="@drawable/ic_baseline_mode_night_24"
         android:layout_margin="16dp"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="UseAppTint" />
+
+    <ImageView
+        android:id="@+id/btn_profile_logout"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_baseline_logout_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="UseAppTint" />
@@ -107,10 +118,10 @@
                 android:id="@+id/btn_profile_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_marginEnd="8dp"
                 android:src="@drawable/ic_baseline_mode_edit_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintBottom_toBottomOf="@+id/txt_profile_email"
+                app:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
