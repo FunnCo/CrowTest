@@ -22,13 +22,15 @@ class TestDetailsActivity : AppCompatActivity() {
             onBackPressed()
         }
 
+        val testId = intent.getStringExtra("test_id")
         binding.btnDetailsStart.setOnClickListener {
-            // TODO: Передавать id теста
-            startActivity(Intent(this, TestActivity::class.java))
+            val intent = Intent(this, TestActivity::class.java)
+            intent.putExtra("test_id",testId)
+            startActivity(intent)
             finish()
         }
 
-        val testId = intent.getStringExtra("test_id")
+
         Repository.getTestById(testId!!){
             binding.txtDetailsHeading.text = it.heading
             binding.testDetailsTxtTimeForSolving.text = "${it.timeForSolving} мин"

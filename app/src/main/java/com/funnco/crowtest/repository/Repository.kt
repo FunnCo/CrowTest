@@ -9,19 +9,9 @@ object Repository {
     lateinit var downLoadedTests: List<TestModel>
 
     fun sendAnswers(testId: String, questions: List<BaseQuestion>, response: (TestModel) -> Unit) {
-        response(
-            TestModel(
-                "uuid1",
-                "Параллельность плоскостей",
-                "Самостоятельная работа по теме параллельность плоскостей",
-                "01.12.2022",
-                "01.12.2022",
-                "01.12.2022",
-                "5",
-                25,
-                15.3f
-            )
-        )
+        getTestById(testId){
+            response(it)
+        }
     }
 
     fun loadQuestions(
@@ -86,17 +76,7 @@ object Repository {
                     ),
                 )
             ),
-            TestModel(
-                "uuid1",
-                "Параллельность плоскостей",
-                "Самостоятельная работа по теме параллельность плоскостей",
-                "01.12.2022",
-                "01.12.2022",
-                null,
-                null,
-                1,
-                null
-            )
+            downLoadedTests.find { it.id == testId }!!
         )
     }
 
@@ -137,7 +117,7 @@ object Repository {
                     "20.11.2022",
                     "01.12.2022",
                     "2",
-                    40,
+                    1,
                     28.0f
                 ),
                 TestModel(

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.funnco.crowtest.activity.test.question.CurrentTest
 import com.funnco.crowtest.activity.test_result.TestResultActivity
+import com.funnco.crowtest.common.model.TestModel
 import com.funnco.crowtest.databinding.ActivityTestBinding
 import com.funnco.crowtest.repository.Repository
 import java.text.SimpleDateFormat
@@ -18,6 +19,9 @@ import java.util.*
 class TestActivity : AppCompatActivity() {
     lateinit var binding: ActivityTestBinding
     private var solveTime = 0f
+
+    private lateinit var countDown : CountDownTimer
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTestBinding.inflate(layoutInflater)
@@ -32,11 +36,11 @@ class TestActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
 
+        val testId = intent.getStringExtra("test_id")
 
+        Repository.loadQuestions(testId!!) { questions, test ->
 
-        Repository.loadQuestions("uuid1") { questions, test ->
-
-            val countDown = object : CountDownTimer((test.timeForSolving * 60000).toLong(), 1000) {
+            countDown = object : CountDownTimer((test.timeForSolving * 60000).toLong(), 1000) {
                 override fun onTick(p0: Long) {
                     val formatter = SimpleDateFormat("mm:ss")
                     binding.activityTestTxtTime.setText(formatter.format(Date(p0)))
@@ -105,7 +109,6 @@ class TestActivity : AppCompatActivity() {
     }
 
     fun finishTest(isTimeExceeded: Boolean) {
-        // TODO: Доделать отправку результатов теста, в том числе и в репозитории
         val test = CurrentTest.getInstanceOfTest().test
         if (isTimeExceeded) {
             test.timeUsedToSolve = test.timeForSolving.toFloat()
@@ -113,20 +116,29 @@ class TestActivity : AppCompatActivity() {
                 .setMessage("К сожалению, время отведенное на выполнение теста вышло. Будут засчитаны только те ответы, которые вы успели ввести.")
                 .show()
         } else {
+            var isSureExit = false
             test.timeUsedToSolve = solveTime/60000f
+            AlertDialog.Builder(this).setTitle("Завершение теста")
+                .setMessage("Вы уверены, что хотите завершить тест досрочно?")
+                .setPositiveButton("Да") { _, _ -> sendAnswers(test) }
+                .setNegativeButton("Нет") { _, _ -> }
+                .show()
         }
+    }
 
+    private fun sendAnswers(test: TestModel){
         val resultIntent = Intent(this, TestResultActivity::class.java)
         resultIntent.putExtra("test_id", test.id)
+        countDown.cancel()
         Repository.sendAnswers(test.id, CurrentTest.getInstanceOfTest().listOfQuestions){
             startActivity(resultIntent)
             finish()
         }
-
     }
 
     override fun onStop() {
         super.onStop()
+        countDown.cancel()
         finish()
     }
 }

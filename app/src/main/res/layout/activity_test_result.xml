@@ -149,15 +149,6 @@
 
     </ScrollView>
 
-
-
-
-
-
-
-
-
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_details_start"
         android:layout_width="match_parent"
@@ -166,6 +157,7 @@
         android:paddingVertical="12dp"
         android:text="На главную"
         android:textAllCaps="false"
+        android:layout_marginBottom="12dp"
         app:cornerRadius="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
