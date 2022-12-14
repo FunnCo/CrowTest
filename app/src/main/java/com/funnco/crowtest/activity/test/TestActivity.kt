@@ -53,9 +53,7 @@ class TestActivity : AppCompatActivity() {
             }
             countDown.start()
 
-
             binding.activityBtnTestEnd.setOnClickListener {
-                countDown.cancel()
                 finishTest(false)
             }
 
