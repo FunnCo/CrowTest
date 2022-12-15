@@ -31,12 +31,12 @@ class TestDetailsActivity : AppCompatActivity() {
         }
 
 
-        Repository.getTestById(testId!!){
+        Repository.getTestById(testId!!, false){
             binding.txtDetailsHeading.text = it.heading
-            binding.testDetailsTxtTimeForSolving.text = "${it.timeForSolving} мин"
+            binding.testDetailsTxtTimeForSolving.text = it.getPrettyTimeSolving()
             binding.testDetailsTxtDescription.text = it.description
             binding.testDetailsTxtOpenDate.text = it.startDate
-            binding.testDetailsTxtCloseDate.text = it.deadlineDate
+            binding.testDetailsTxtCloseDate.text = it.deadLineDate
         }
     }
 

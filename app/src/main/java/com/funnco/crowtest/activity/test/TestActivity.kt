@@ -40,7 +40,7 @@ class TestActivity : AppCompatActivity() {
 
         Repository.loadQuestions(testId!!) { questions, test ->
 
-            countDown = object : CountDownTimer((test.timeForSolving * 60000).toLong(), 1000) {
+            countDown = object : CountDownTimer((test!!.timeForSolving!! * 60000).toLong(), 1000) {
                 override fun onTick(p0: Long) {
                     val formatter = SimpleDateFormat("mm:ss")
                     binding.activityTestTxtTime.setText(formatter.format(Date(p0)))
@@ -57,7 +57,7 @@ class TestActivity : AppCompatActivity() {
                 finishTest(false)
             }
 
-            CurrentTest.attachQuestions(questions)
+            CurrentTest.attachQuestions(questions!!)
             CurrentTest.attachQuestions(test)
 
             val questionsAdapter = QuestionsAdapter(
@@ -109,13 +109,12 @@ class TestActivity : AppCompatActivity() {
     fun finishTest(isTimeExceeded: Boolean) {
         val test = CurrentTest.getInstanceOfTest().test
         if (isTimeExceeded) {
-            test.timeUsedToSolve = test.timeForSolving.toFloat()
+            test.solvingTime = test.timeForSolving!!.toFloat()
             AlertDialog.Builder(this).setTitle("Завершение теста")
                 .setMessage("К сожалению, время отведенное на выполнение теста вышло. Будут засчитаны только те ответы, которые вы успели ввести.")
                 .show()
         } else {
-            var isSureExit = false
-            test.timeUsedToSolve = solveTime/60000f
+            test.solvingTime = solveTime/60000f
             AlertDialog.Builder(this).setTitle("Завершение теста")
                 .setMessage("Вы уверены, что хотите завершить тест досрочно?")
                 .setPositiveButton("Да") { _, _ -> sendAnswers(test) }
@@ -128,7 +127,7 @@ class TestActivity : AppCompatActivity() {
         val resultIntent = Intent(this, TestResultActivity::class.java)
         resultIntent.putExtra("test_id", test.id)
         countDown.cancel()
-        Repository.sendAnswers(test.id, CurrentTest.getInstanceOfTest().listOfQuestions){
+        Repository.sendAnswers(test.id, CurrentTest.getInstanceOfTest().listOfQuestions, test.solvingTime!!.toDouble()){
             startActivity(resultIntent)
             finish()
         }

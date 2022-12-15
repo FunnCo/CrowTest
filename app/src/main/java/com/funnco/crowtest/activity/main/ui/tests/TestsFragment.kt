@@ -24,8 +24,8 @@ class TestsFragment : Fragment() {
         binding = FragmentTestsBinding.inflate(inflater, container, false)
 
         Repository.loadAvailableTests {
-            listOfTests = it
-            binding.recyclerTests.adapter = TestsAdapter(it)
+            listOfTests = it!!
+            binding.recyclerTests.adapter = TestsAdapter(it!!)
         }
 
         binding.profileEtxtFilter.doOnTextChanged { text, start, before, count ->

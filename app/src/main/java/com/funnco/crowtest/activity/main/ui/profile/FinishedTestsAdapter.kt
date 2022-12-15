@@ -24,7 +24,7 @@ class FinishedTestsAdapter(val listOfItems: List<TestModel>) :
 
             binding.txtItemTestHeading.text = item.heading
             binding.itemTestDeadline.text = "Дата прохождения: ${item.solveDate}"
-            binding.itemTestSoveTime.text = "Время прохождения: ${item.timeUsedToSolve} мин"
+            binding.itemTestSoveTime.text = "Время прохождения: ${item.getPrettyTimeSolving()}"
             binding.txtItemTestMark.text = item.mark
 
             binding.root.setOnClickListener {

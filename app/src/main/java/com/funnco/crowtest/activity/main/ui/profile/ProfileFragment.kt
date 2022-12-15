@@ -31,6 +31,12 @@ class ProfileFragment : Fragment() {
 
         binding = FragmentProfileBinding.inflate(inflater, container, false)
 
+        Repository.login(SharedPreferencesUtils.getToken(requireContext())!!) { user ->
+            binding.txtProfileName.text = user!!.name
+            binding.txtProfileEmail.text = user!!.mail
+            binding.txtProfileGrade.text = user!!.grade
+        }
+
         val currentMode = SharedPreferencesUtils.getInt(requireContext(), "dark_mode")
 
         binding.btnProfileNightMode.setOnClickListener {
@@ -51,6 +57,7 @@ class ProfileFragment : Fragment() {
                 .setMessage("Вы уверены что хотите выйти из своего аккаунта?").setPositiveButton(
                     "Да"
                 ) { p0, p1 ->
+                    SharedPreferencesUtils.removeToken(requireContext())
                     startActivity(Intent(binding.root.context, LoginActivity::class.java))
                     activity?.finish()
                 }.setNegativeButton("Нет") { _, _ -> }.show()
@@ -70,7 +77,7 @@ class ProfileFragment : Fragment() {
         }
 
         Repository.loadDoneTests {
-            listOfDoneTests = it
+            listOfDoneTests = it!!
             binding.recyclerProfileFinishedTests.adapter = FinishedTestsAdapter(it)
         }
 

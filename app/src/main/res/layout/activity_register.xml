@@ -124,6 +124,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/register_password"
                 android:layout_width="match_parent"
+                android:inputType="textPassword"
                 android:layout_height="wrap_content"
                 android:hint="Пароль" />
 
@@ -148,6 +149,7 @@
                 android:id="@+id/register_password_repeat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textPassword"
                 android:hint="Повторите пароль" />
 
         </com.google.android.material.textfield.TextInputLayout>

@@ -18,9 +18,9 @@ class TestResultActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val testId = intent.getStringExtra("test_id")
-        Repository.getTestById(testId!!){
+        Repository.getTestById(testId!!, true){
             binding.txtDetailsHeading.text = it.heading
-            binding.testDetailsTxtTimeForSolving.text = "${it.timeUsedToSolve} мин"
+            binding.testDetailsTxtTimeForSolving.text = "${it.getPrettyTimeSolving()}"
             binding.testDetailsTxtDescription.text = it.description
             binding.testDetailsTxtCloseDate.text = it.solveDate
             binding.txtResultMark.text = it.mark
@@ -38,7 +38,7 @@ class TestResultActivity : AppCompatActivity() {
         }
 
         binding.btnDetailsStart.setOnClickListener {
-            onBackPressed()
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
     }

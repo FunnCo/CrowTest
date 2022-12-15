@@ -21,7 +21,7 @@ class TestsAdapter(val listOfItems: List<TestModel>) : Adapter<TestsAdapter.Avai
             binding = ItemAvailableTestBinding.bind(itemView)
 
             binding.txtItemTestHeading.text = item.heading
-            binding.itemTestDeadline.text =  "Крайний срок сдачи: ${item.deadlineDate}"
+            binding.itemTestDeadline.text =  "Крайний срок сдачи: ${item.deadLineDate}"
             binding.itemTestSoveTime.text = "Время прохождения: ${item.timeForSolving} мин"
 
             binding.root.setOnClickListener {
