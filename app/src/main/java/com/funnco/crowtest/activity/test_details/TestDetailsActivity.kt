@@ -33,7 +33,7 @@ class TestDetailsActivity : AppCompatActivity() {
 
         Repository.getTestById(testId!!, false){
             binding.txtDetailsHeading.text = it.heading
-            binding.testDetailsTxtTimeForSolving.text = it.getPrettyTimeSolving()
+            binding.testDetailsTxtTimeForSolving.text = it.timeForSolving.toString() + " мин"
             binding.testDetailsTxtDescription.text = it.description
             binding.testDetailsTxtOpenDate.text = it.startDate
             binding.testDetailsTxtCloseDate.text = it.deadLineDate
