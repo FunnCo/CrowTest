@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.viewpager2.widget.ViewPager2
 import com.funnco.crowtest.R
-import com.funnco.crowtest.common.model.question_models.BaseQuestion
+import com.funnco.crowtest.common.model.common.QuestionModel
 import com.funnco.crowtest.databinding.CustomQuestionNumberBinding
 
 class QuestionNumberAdapter(private val questionsAdapter: QuestionsAdapter, val questionsViewPager: ViewPager2) : Adapter<QuestionNumberAdapter.QuestionNumberViewHolder>() {
@@ -17,7 +17,7 @@ class QuestionNumberAdapter(private val questionsAdapter: QuestionsAdapter, val 
     class QuestionNumberViewHolder(itemView: View, val questionsViewPager: ViewPager2) : ViewHolder(itemView){
         lateinit var binding: CustomQuestionNumberBinding
 
-        fun bind(item: BaseQuestion, position: Int, isOpened: Boolean){
+        fun bind(item: QuestionModel, position: Int, isOpened: Boolean){
             binding = CustomQuestionNumberBinding.bind(itemView)
             binding.itemQuestionNumber.text = "${position+1}"
 

@@ -5,39 +5,46 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.funnco.crowtest.common.model.AnswerModel
 import com.funnco.crowtest.databinding.ItemAccrodanceTaskBinding
 
 class AccordanceSecondListAdapter(
-    val listOfItems: List<AnswerModel>,
-    val secondRecycler: RecyclerView
+    val listOfItems: List<String>,
 ) : RecyclerView.Adapter<AccordanceSecondListAdapter.AccordanceSecondListItemViewHolder>() {
-    class AccordanceSecondListItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        lateinit var binding: ItemAccrodanceTaskBinding
 
-        fun bind(item: AnswerModel, heightToAdjust: Int) {
-            binding = ItemAccrodanceTaskBinding.bind(itemView)
-            binding.itemTxtAccordanceAnswerContent.text = item.content
-            binding.itemOmgAccordanceDrag.visibility = View.VISIBLE
-
-            binding.root.measure(View.MeasureSpec.UNSPECIFIED,View.MeasureSpec.UNSPECIFIED)
-
-            val extraPadding = heightToAdjust - binding.root.measuredHeight
-
-            Log.i(this.javaClass.simpleName, "first height: $heightToAdjust, itemView height: ${binding.root.measuredHeight}, difference: $extraPadding")
-            if(extraPadding > 0) {
-                val layoutParams = binding.root.layoutParams as ViewGroup.MarginLayoutParams
-                layoutParams.setMargins(
-                    layoutParams.leftMargin,
-                    layoutParams.topMargin,
-                    layoutParams.rightMargin,
-                    layoutParams.bottomMargin + extraPadding
-                )
-                binding.root.requestLayout()
-            }
-        }
+    init{
+        setHasStableIds(true)
     }
 
+    class AccordanceSecondListItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+        ResizeableViewHolder {
+        lateinit var binding: ItemAccrodanceTaskBinding
+        var basicMargin: Int = 0
+
+        override fun resize(heightToAdjust: Int) {
+            val layoutParams = binding.root.layoutParams as ViewGroup.MarginLayoutParams
+            if(basicMargin == 0){
+                basicMargin = layoutParams.bottomMargin
+            }
+            layoutParams.setMargins(
+                layoutParams.leftMargin,
+                layoutParams.topMargin,
+                layoutParams.rightMargin,
+                basicMargin + binding.root.height - heightToAdjust
+            )
+            binding.root.requestLayout()
+        }
+
+        override fun getHeight(): Int {
+            binding.root.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+            return binding.root.measuredHeight
+        }
+
+        fun bind(item: String) {
+            binding = ItemAccrodanceTaskBinding.bind(itemView)
+            binding.itemTxtAccordanceAnswerContent.text = item
+            binding.itemOmgAccordanceDrag.visibility = View.VISIBLE
+        }
+    }
 
 
     override fun onCreateViewHolder(
@@ -56,8 +63,7 @@ class AccordanceSecondListAdapter(
 
     override fun onBindViewHolder(holder: AccordanceSecondListItemViewHolder, position: Int) {
         holder.bind(
-            listOfItems[position],
-            secondRecycler.findViewHolderForAdapterPosition(position)!!.itemView.height
+            listOfItems[position]
         )
     }
 

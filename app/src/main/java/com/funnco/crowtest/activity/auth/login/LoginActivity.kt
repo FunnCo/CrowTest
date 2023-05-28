@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import com.funnco.crowtest.activity.auth.register.RegisterActivity
 import com.funnco.crowtest.activity.main.MainActivity
+import com.funnco.crowtest.common.model.request.UserLoginModel
 import com.funnco.crowtest.common.utils.SharedPreferencesUtils
 import com.funnco.crowtest.databinding.ActivityLoginBinding
 import com.funnco.crowtest.repository.Repository
@@ -17,6 +18,12 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         supportActionBar?.hide()
         setContentView(binding.root)
+
+        SharedPreferencesUtils.removeToken(this)
+        val savedCredential = SharedPreferencesUtils.getLoginModel(this);
+        if(savedCredential.password == null || savedCredential.email == null){
+            SharedPreferencesUtils.removeLoginModel(this)
+        }
 
         binding.loginRegister.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
@@ -33,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
             if (isMailValid(email!!)) {
-                Repository.login(email, password!!) { code, token ->
+                Repository.login(UserLoginModel(email, password!!)) { code, token ->
                     if (code != 200) {
                         AlertDialog.Builder(this).setTitle("Ошибка")
                             .setMessage("Возможно вы ввели неправильные данные. Проверьте их, и попробуйте авториховаться снова")

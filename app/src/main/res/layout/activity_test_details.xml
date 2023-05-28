@@ -71,14 +71,35 @@
         app:layout_constraintStart_toStartOf="@+id/btn_details_start" />
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/textView13"
+        style="@style/MyDesignTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        style="@style/MyDesignTextView"
         android:text="Время прохождения теста: "
         app:layout_constraintBottom_toTopOf="@+id/textView11"
         app:layout_constraintStart_toStartOf="@+id/btn_details_start" />
+
+    <TextView
+        android:id="@+id/textView12"
+        style="@style/MyDesignTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Предмет:"
+        app:layout_constraintBottom_toTopOf="@+id/textView14"
+        app:layout_constraintStart_toStartOf="@+id/btn_details_start" />
+
+    <TextView
+        android:id="@+id/textView14"
+        style="@style/MyDesignTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Преподаватель:"
+        app:layout_constraintBottom_toTopOf="@+id/textView13"
+        app:layout_constraintStart_toStartOf="@+id/btn_details_start" />
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -98,6 +119,26 @@
         android:id="@+id/test_details_txt_time_for_solving"
         android:text="25 мин"
         app:layout_constraintBottom_toTopOf="@+id/textView11"
+        app:layout_constraintEnd_toEndOf="@+id/test_details_txt_close_date" />
+
+    <TextView
+        android:id="@+id/test_details_txt_author"
+        style="@style/MyDesignTextView"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_height="wrap_content"
+        android:text="Иван Иванович Иванов"
+        app:layout_constraintBottom_toTopOf="@+id/textView13"
+        app:layout_constraintEnd_toEndOf="@+id/test_details_txt_close_date" />
+
+    <TextView
+        android:id="@+id/test_details_txt_subject"
+        style="@style/MyDesignTextView"
+        android:layout_marginBottom="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Физика"
+        app:layout_constraintBottom_toTopOf="@+id/textView14"
         app:layout_constraintEnd_toEndOf="@+id/test_details_txt_close_date" />
 
     <TextView

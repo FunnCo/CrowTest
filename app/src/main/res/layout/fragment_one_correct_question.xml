@@ -22,6 +22,7 @@
 
         <ScrollView
             android:layout_width="match_parent"
+            android:paddingVertical="12dp"
             android:layout_height="wrap_content">
 
             <TextView
@@ -29,8 +30,7 @@
                 style="@style/MyDesignTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос  Вопрос Вопрос Вопрос Вопрос  Вопрос Вопрос Вопрос Вопрос  Вопрос Вопрос Вопрос Вопрос  Вопрос Вопрос Вопрос Вопрос  Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос Вопрос "
+                android:layout_marginHorizontal="16dp"
                 android:textSize="10pt" />
         </ScrollView>
     </com.google.android.material.card.MaterialCardView>

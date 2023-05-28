@@ -18,17 +18,23 @@ class TestResultActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val testId = intent.getStringExtra("test_id")
-        Repository.getTestById(testId!!, true){
-            binding.txtDetailsHeading.text = it.heading
-            binding.testDetailsTxtTimeForSolving.text = "${it.getPrettyTimeSolving()}"
+
+
+        Repository.getTestById(testId!!){
+            val result = Repository.getTestResults(testId)
+
+            binding.txtDetailsHeading.text = it.title
+
+            binding.testDetailsTxtTimeForSolving.text = result.getPrettyTimeSolving()
             binding.testDetailsTxtDescription.text = it.description
-            binding.testDetailsTxtCloseDate.text = it.solveDate
-            binding.txtResultMark.text = it.mark
+
+            binding.testDetailsTxtCloseDate.text = result.getPrettySolveDate()
+            binding.txtResultMark.text = result.mark.toString()
 
             binding.materialCardView4.setCardBackgroundColor(
                 ContextCompat.getColor(
                     this,
-                    when (it.mark!!.toInt()) {
+                    when (result.mark) {
                         5 -> R.color.excellent_mark
                         4 -> R.color.good_mark
                         3 -> R.color.satisfying_mark
@@ -36,6 +42,7 @@ class TestResultActivity : AppCompatActivity() {
                     }
             ))
         }
+
 
         binding.btnDetailsStart.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))

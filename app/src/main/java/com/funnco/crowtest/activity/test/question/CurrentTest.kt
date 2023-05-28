@@ -1,60 +1,19 @@
 package com.funnco.crowtest.activity.test.question
 
-import com.funnco.crowtest.common.model.AnswerModel
-import com.funnco.crowtest.common.model.TestModel
-import com.funnco.crowtest.common.model.question_models.*
+import com.funnco.crowtest.common.model.common.AnswerModelHolder
+import com.funnco.crowtest.common.model.common.QuestionModel
+import com.funnco.crowtest.common.model.response.TestInfoModel
 
 class CurrentTest private constructor(){
 
-    lateinit var listOfQuestions: List<BaseQuestion>
+    lateinit var listOfQuestions: List<QuestionModel>
     lateinit var listener: OnWriteListener
-    lateinit var test: TestModel
+    lateinit var test: TestInfoModel
 
-    fun answerAtQuestion(answers: List<AnswerModel>, numberOfQuestion: Int ) {
-        writeAnswer(answers, listOfQuestions[numberOfQuestion] as AccordanceQuestion)
+    fun answerAtQuestion(answer: AnswerModelHolder, questionPos: Int) {
+        listOfQuestions[questionPos].body = answer
+        listOfQuestions[questionPos].isAnswered = true
         listener.onWrite()
-    }
-
-    fun answerAtQuestion(answer: AnswerModel?, numberOfQuestion: Int ) {
-        when (listOfQuestions[numberOfQuestion].type) {
-            "one_answer" -> {
-                writeAnswer(answer!!, listOfQuestions[numberOfQuestion] as OneAnswerQuestion)
-            }
-            "multiple_answer" -> {
-                writeAnswer(answer!!, listOfQuestions[numberOfQuestion] as MultipleAnswerQuestion)
-            }
-            "input_answer" -> {
-                writeAnswer(answer, listOfQuestions[numberOfQuestion] as InputQuestion)
-            }
-        }
-    }
-
-    private fun writeAnswer(answer: AnswerModel, question: OneAnswerQuestion){
-        question.answers.find { it.content == answer.content }!!.isSelected = true
-        question.answers.find { it.content != answer.content }!!.isSelected = false
-        question.isAnswered = true
-        listener.onWrite()
-    }
-
-    private fun writeAnswer(answers: List<AnswerModel>, question: AccordanceQuestion){
-        question.isAnswered = true
-        question.secondListOfAnswers = answers
-        listener.onWrite()
-    }
-
-    private fun writeAnswer(answer: AnswerModel, question: MultipleAnswerQuestion){
-        val answerModel = question.answers.find { it.content == answer.content }
-        answerModel!!.isSelected = !answerModel.isSelected
-        question.isAnswered = !question.answers.all { !it.isSelected }
-        listener.onWrite()
-    }
-
-    private fun writeAnswer(answer: AnswerModel?, question: InputQuestion){
-        question.answer = answer
-        if(question.answer != null){
-            question.isAnswered = true
-            listener.onWrite()
-        }
     }
 
     companion object{
@@ -67,7 +26,7 @@ class CurrentTest private constructor(){
             return instance!!
         }
 
-        fun attachQuestions(test: List<BaseQuestion>) {
+        fun attachQuestions(test: List<QuestionModel>) {
             getInstanceOfTest().listOfQuestions = test
         }
 
@@ -75,7 +34,7 @@ class CurrentTest private constructor(){
             getInstanceOfTest().listener = newListener
         }
 
-        fun attachQuestions(currentTest: TestModel){
+        fun attachTestModel(currentTest: TestInfoModel){
             getInstanceOfTest().test = currentTest
         }
 
@@ -84,13 +43,6 @@ class CurrentTest private constructor(){
     interface OnWriteListener{
         fun onWrite()
     }
-
-
-    /** TODO: Остановился здесь, делай дальше отсюда.
-     *
-     *  TODO: Надо сделать диалог с подтверждением при нажатии кнопки назад в тесте
-     *  TODO: Надо сделать отправку данных в репозиторий отсюда
-     */
 
 
 }

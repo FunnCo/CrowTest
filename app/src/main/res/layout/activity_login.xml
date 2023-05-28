@@ -54,6 +54,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_email"
                 android:layout_width="match_parent"
+                android:maxLines="1"
+                android:inputType="textEmailAddress"
                 android:layout_height="wrap_content"
                 android:hint="Почта" />
 
@@ -79,6 +81,7 @@
                 android:layout_width="match_parent"
                 android:inputType="textPassword"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
                 android:hint="Пароль" />
 
         </com.google.android.material.textfield.TextInputLayout>

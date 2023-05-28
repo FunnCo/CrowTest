@@ -4,13 +4,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.funnco.crowtest.activity.test.question.CurrentTest
 import com.funnco.crowtest.activity.test_result.TestResultActivity
-import com.funnco.crowtest.common.model.TestModel
+import com.funnco.crowtest.common.model.request.SolvedTestModel
 import com.funnco.crowtest.databinding.ActivityTestBinding
 import com.funnco.crowtest.repository.Repository
 import java.text.SimpleDateFormat
@@ -18,18 +17,19 @@ import java.util.*
 
 class TestActivity : AppCompatActivity() {
     lateinit var binding: ActivityTestBinding
-    private var solveTime = 0f
+    private var solveTime = 0L
 
     private lateinit var countDown : CountDownTimer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTestBinding.inflate(layoutInflater)
-        // Запрет скриншотов
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_SECURE,
-            WindowManager.LayoutParams.FLAG_SECURE
-        )
+
+//        // Запрет скриншотов
+//        window.setFlags(
+//            WindowManager.LayoutParams.FLAG_SECURE,
+//            WindowManager.LayoutParams.FLAG_SECURE
+//        )
 
         binding.activityTestRcQuestionNumber.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -40,10 +40,10 @@ class TestActivity : AppCompatActivity() {
 
         Repository.loadQuestions(testId!!) { questions, test ->
 
-            countDown = object : CountDownTimer((test!!.timeForSolving!! * 60000).toLong(), 1000) {
+            countDown = object : CountDownTimer(test!!.duration!!, 1000) {
                 override fun onTick(p0: Long) {
                     val formatter = SimpleDateFormat("mm:ss")
-                    binding.activityTestTxtTime.setText(formatter.format(Date(p0)))
+                    binding.activityTestTxtTime.text = formatter.format(Date(p0))
                     solveTime += 1000
                 }
 
@@ -58,7 +58,7 @@ class TestActivity : AppCompatActivity() {
             }
 
             CurrentTest.attachQuestions(questions!!)
-            CurrentTest.attachQuestions(test)
+            CurrentTest.attachTestModel(test)
 
             val questionsAdapter = QuestionsAdapter(
                 CurrentTest.getInstanceOfTest().listOfQuestions,
@@ -107,27 +107,32 @@ class TestActivity : AppCompatActivity() {
     }
 
     fun finishTest(isTimeExceeded: Boolean) {
-        val test = CurrentTest.getInstanceOfTest().test
+        val solvedTestModel = SolvedTestModel(null, null, null)
+        val now = Date()
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale("ru"))
+
+        solvedTestModel.finishSolvingDateTime = dateFormat.format(now)
+        solvedTestModel.startSolvingDateTime = dateFormat.format(Date(now.time - solveTime))
+        solvedTestModel.answers = CurrentTest.getInstanceOfTest().listOfQuestions
         if (isTimeExceeded) {
-            test.solvingTime = test.timeForSolving!!.toFloat()
             AlertDialog.Builder(this).setTitle("Завершение теста")
                 .setMessage("К сожалению, время отведенное на выполнение теста вышло. Будут засчитаны только те ответы, которые вы успели ввести.")
                 .show()
+            sendAnswers(solvedTestModel)
         } else {
-            test.solvingTime = solveTime/60000f
             AlertDialog.Builder(this).setTitle("Завершение теста")
                 .setMessage("Вы уверены, что хотите завершить тест досрочно?")
-                .setPositiveButton("Да") { _, _ -> sendAnswers(test) }
+                .setPositiveButton("Да") { _, _ -> sendAnswers(solvedTestModel) }
                 .setNegativeButton("Нет") { _, _ -> }
                 .show()
         }
     }
 
-    private fun sendAnswers(test: TestModel){
+    private fun sendAnswers(test: SolvedTestModel){
         val resultIntent = Intent(this, TestResultActivity::class.java)
-        resultIntent.putExtra("test_id", test.id)
+        resultIntent.putExtra("test_id", CurrentTest.getInstanceOfTest().test.testId)
         countDown.cancel()
-        Repository.sendAnswers(test.id, CurrentTest.getInstanceOfTest().listOfQuestions, test.solvingTime!!.toDouble()){
+        Repository.sendAnswers(CurrentTest.getInstanceOfTest().test.testId!!, test){
             startActivity(resultIntent)
             finish()
         }

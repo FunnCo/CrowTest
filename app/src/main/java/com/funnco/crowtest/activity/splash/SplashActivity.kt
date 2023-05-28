@@ -34,12 +34,13 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         Handler().postDelayed({
-            val token = SharedPreferencesUtils.getToken(this)
+            val credentials = SharedPreferencesUtils.getLoginModel(this)
 
-            if (token != null) {
+            if (credentials.email != null && credentials.password!=null) {
                 Log.i("TAG", "c")
-                Repository.login(token) { user ->
-                    if (user != null) {
+                Repository.login(credentials) { code, tokenHolder ->
+                    if (code == 200 && tokenHolder != null) {
+                        SharedPreferencesUtils.saveToken(this, tokenHolder.token)
                         startActivity(Intent(this, MainActivity::class.java))
                         finish()
                     } else {

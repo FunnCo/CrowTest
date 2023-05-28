@@ -5,24 +5,38 @@
     android:layout_marginVertical="4dp"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/item_txt_accordance_answer_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/MyDesignTextView"
-        android:text="Офигенный вариант ответа"
-        android:layout_gravity="center_vertical"
-        android:paddingVertical="12dp"
-        android:layout_marginStart="8dp"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/item_omg_accordance_drag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:visibility="gone"
-        android:src="@drawable/ic_baseline_drag_handle_24"
-        android:layout_gravity="center_vertical|end"/>
+
+        <TextView
+            android:id="@+id/item_txt_accordance_answer_content"
+            style="@style/MyDesignTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:paddingVertical="12dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:text="Офигенный вариант ответа"
+            app:layout_constraintEnd_toStartOf="@+id/item_omg_accordance_drag"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/item_omg_accordance_drag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginEnd="4dp"
+            android:src="@drawable/ic_baseline_drag_handle_24"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 

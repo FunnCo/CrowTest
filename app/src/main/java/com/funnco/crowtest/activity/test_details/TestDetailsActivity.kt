@@ -25,18 +25,21 @@ class TestDetailsActivity : AppCompatActivity() {
         val testId = intent.getStringExtra("test_id")
         binding.btnDetailsStart.setOnClickListener {
             val intent = Intent(this, TestActivity::class.java)
-            intent.putExtra("test_id",testId)
+            intent.putExtra("test_id", testId)
             startActivity(intent)
             finish()
         }
 
 
-        Repository.getTestById(testId!!, false){
-            binding.txtDetailsHeading.text = it.heading
-            binding.testDetailsTxtTimeForSolving.text = it.timeForSolving.toString() + " мин"
-            binding.testDetailsTxtDescription.text = it.description
-            binding.testDetailsTxtOpenDate.text = it.startDate
-            binding.testDetailsTxtCloseDate.text = it.deadLineDate
+        val test = Repository.getTestById(testId!!)
+        Repository.getAuthor(test.authorId!!){
+            binding.txtDetailsHeading.text = test.title
+            binding.testDetailsTxtTimeForSolving.text = test.getPrettyTime()
+            binding.testDetailsTxtDescription.text = test.description
+            binding.testDetailsTxtOpenDate.text = test.getPrettyStartLineDate()
+            binding.testDetailsTxtCloseDate.text = test.getPrettyDeadLineDate()
+            binding.testDetailsTxtSubject.text = test.subjectName
+            binding.testDetailsTxtAuthor.text = "${it!!.firstname} ${it.lastname} ${it.patronymic}"
         }
     }
 

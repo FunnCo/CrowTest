@@ -1,20 +1,17 @@
 package com.funnco.crowtest.activity.test.question
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import com.funnco.crowtest.R
-import com.funnco.crowtest.common.model.AnswerModel
-import com.funnco.crowtest.common.model.question_models.InputQuestion
-import com.funnco.crowtest.common.model.question_models.OneAnswerQuestion
+import com.funnco.crowtest.common.model.common.QuestionModel
 import com.funnco.crowtest.databinding.FragmentInputQuestionBinding
 
 
-class InputQuestionFragment(private val question: InputQuestion, val pos: Int) : Fragment() {
+class InputQuestionFragment(private val question: QuestionModel, val pos: Int) : Fragment() {
 
     private lateinit var binding: FragmentInputQuestionBinding
 
@@ -32,16 +29,13 @@ class InputQuestionFragment(private val question: InputQuestion, val pos: Int) :
         )
 
 
-        binding.fragmentQuestionTxtTask.text = question.task
+        binding.fragmentQuestionTxtTask.text = question.description
         if(question.isAnswered) {
-            binding.fragmentQuestionEtxtAnswer.setText(question.answer!!.content)
+            binding.fragmentQuestionEtxtAnswer.setText(question.body.singleAnswer?.answer as String? ?: "")
         }
         binding.fragmentQuestionEtxtAnswer.doOnTextChanged { text, start, before, count ->
-            if(text.isNullOrBlank()) {
-                CurrentTest.getInstanceOfTest().answerAtQuestion(null, pos)
-            } else {
-                CurrentTest.getInstanceOfTest().answerAtQuestion(AnswerModel(text.toString()), pos)
-            }
+            question.body.singleAnswer!!.answer = text.toString()
+            CurrentTest.getInstanceOfTest().answerAtQuestion(question.body, pos)
         }
 
         return binding.root

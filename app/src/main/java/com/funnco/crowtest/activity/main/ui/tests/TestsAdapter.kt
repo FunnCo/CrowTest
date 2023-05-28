@@ -6,27 +6,30 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.funnco.crowtest.R
 import com.funnco.crowtest.activity.test_details.TestDetailsActivity
-import com.funnco.crowtest.common.model.TestModel
+import com.funnco.crowtest.common.model.response.TestInfoModel
 import com.funnco.crowtest.databinding.ItemAvailableTestBinding
-import com.squareup.picasso.Picasso
 
-class TestsAdapter(val listOfItems: List<TestModel>) : Adapter<TestsAdapter.AvailableTestViewHolder>() {
+class TestsAdapter(var listOfItems: List<TestInfoModel>) : Adapter<TestsAdapter.AvailableTestViewHolder>() {
+
+    init {
+        listOfItems = listOfItems.reversed()
+    }
+
     class AvailableTestViewHolder(itemView: View) : ViewHolder(itemView){
 
         lateinit var binding: ItemAvailableTestBinding
 
-        fun bind(item: TestModel){
+        fun bind(item: TestInfoModel){
             binding = ItemAvailableTestBinding.bind(itemView)
 
-            binding.txtItemTestHeading.text = item.heading
-            binding.itemTestDeadline.text =  "Крайний срок сдачи: ${item.deadLineDate}"
-            binding.itemTestSoveTime.text = "Время прохождения: ${item.timeForSolving} мин"
+            binding.txtItemTestHeading.text = item.title
+            binding.itemTestDeadline.text =  "Крайний срок сдачи: ${item.getPrettyDeadLineDate()}"
+            binding.itemTestSoveTime.text = "Время прохождения: ${item.getPrettyTime()}"
 
             binding.root.setOnClickListener {
                 val intent = Intent(binding.root.context, TestDetailsActivity::class.java)
-                intent.putExtra("test_id", item.id)
+                intent.putExtra("test_id", item.testId)
                 binding.root.context.startActivity(intent)
             }
         }

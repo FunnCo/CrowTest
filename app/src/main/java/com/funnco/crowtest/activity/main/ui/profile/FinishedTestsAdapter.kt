@@ -8,24 +8,28 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.funnco.crowtest.R
-import com.funnco.crowtest.activity.test_details.TestDetailsActivity
 import com.funnco.crowtest.activity.test_result.TestResultActivity
-import com.funnco.crowtest.common.model.TestModel
+import com.funnco.crowtest.common.model.response.ResponseSolvedTestInfo
 import com.funnco.crowtest.databinding.ItemFinishedTestBinding
-import com.squareup.picasso.Picasso
 
-class FinishedTestsAdapter(val listOfItems: List<TestModel>) :
+class FinishedTestsAdapter(var listOfItems: List<ResponseSolvedTestInfo>) :
     Adapter<FinishedTestsAdapter.FinishedTestViewHolder>() {
+
+    init {
+        listOfItems = listOfItems.reversed()
+    }
+
     class FinishedTestViewHolder(itemView: View) : ViewHolder(itemView) {
         private lateinit var binding: ItemFinishedTestBinding
 
-        fun bind(item: TestModel) {
+        fun bind(item: ResponseSolvedTestInfo) {
             binding = ItemFinishedTestBinding.bind(itemView)
 
-            binding.txtItemTestHeading.text = item.heading
-            binding.itemTestDeadline.text = "Дата прохождения: ${item.solveDate}"
+            binding.txtItemTestHeading.text = item.title
+            binding.itemTestDeadline.text = "Дата прохождения: ${item.getPrettySolveDate()}"
             binding.itemTestSoveTime.text = "Время прохождения: ${item.getPrettyTimeSolving()}"
-            binding.txtItemTestMark.text = item.mark
+            binding.txtItemTestMark.text = item.mark.toString()
+
 
             binding.root.setOnClickListener {
 
@@ -33,7 +37,7 @@ class FinishedTestsAdapter(val listOfItems: List<TestModel>) :
                     binding.root.context,
                     TestResultActivity::class.java
                 )
-                intent.putExtra("test_id", item.id)
+                intent.putExtra("test_id", item.testId)
                 binding.root.context.startActivity(intent)
             }
 

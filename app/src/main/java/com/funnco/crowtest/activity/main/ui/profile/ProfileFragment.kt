@@ -1,6 +1,5 @@
 package com.funnco.crowtest.activity.main.ui.profile
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,18 +9,19 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.funnco.crowtest.activity.auth.login.LoginActivity
-import com.funnco.crowtest.activity.main.MainActivity
-import com.funnco.crowtest.common.model.TestModel
+import com.funnco.crowtest.activity.main.ui.common.FilterDialog
+import com.funnco.crowtest.common.model.response.ResponseSolvedTestInfo
 import com.funnco.crowtest.common.utils.SharedPreferencesUtils
 import com.funnco.crowtest.databinding.FragmentProfileBinding
 import com.funnco.crowtest.repository.Repository
-import java.util.*
+import kotlin.streams.toList
 
 class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
-    private var listOfDoneTests: List<TestModel> = emptyList()
+    private var listOfDoneTests: List<ResponseSolvedTestInfo> = emptyList()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,11 +31,13 @@ class ProfileFragment : Fragment() {
 
         binding = FragmentProfileBinding.inflate(inflater, container, false)
 
-        Repository.login(SharedPreferencesUtils.getToken(requireContext())!!) { user ->
-            binding.txtProfileName.text = user!!.name
-            binding.txtProfileEmail.text = user!!.mail
-            binding.txtProfileGrade.text = user!!.grade
+        Repository.getUserInfo { code, user ->
+            binding.txtProfileName.text =
+                "${user!!.firstname} ${user!!.lastname} ${user!!.patronymic}"
+            binding.txtProfileEmail.text = user!!.email
+            binding.txtProfileGrade.text = user!!.groupName
         }
+
 
         val currentMode = SharedPreferencesUtils.getInt(requireContext(), "dark_mode")
 
@@ -58,6 +60,7 @@ class ProfileFragment : Fragment() {
                     "Да"
                 ) { p0, p1 ->
                     SharedPreferencesUtils.removeToken(requireContext())
+                    SharedPreferencesUtils.removeLoginModel(requireContext())
                     startActivity(Intent(binding.root.context, LoginActivity::class.java))
                     activity?.finish()
                 }.setNegativeButton("Нет") { _, _ -> }.show()
@@ -66,11 +69,12 @@ class ProfileFragment : Fragment() {
 
         binding.profileEtxtFilter.doOnTextChanged { text, start, before, count ->
             if (!text.isNullOrBlank()) {
-                binding.recyclerProfileFinishedTests.adapter =
-                    FinishedTestsAdapter(listOfDoneTests.filter {
-                        it.heading.lowercase()
-                            .contains(text.toString().lowercase())
-                    })
+                val listToShow = listOfDoneTests.stream().filter { info ->
+                    listOfDoneTests.find { it.testId == info.testId }?.title?.contains(text)
+                        ?: false
+                }.toList()
+
+                binding.recyclerProfileFinishedTests.adapter = FinishedTestsAdapter(listToShow)
             } else {
                 binding.recyclerProfileFinishedTests.adapter = FinishedTestsAdapter(listOfDoneTests)
             }
@@ -79,6 +83,19 @@ class ProfileFragment : Fragment() {
         Repository.loadDoneTests {
             listOfDoneTests = it!!
             binding.recyclerProfileFinishedTests.adapter = FinishedTestsAdapter(it)
+        }
+
+        binding.btnProfileStats.setOnClickListener {
+            StatsDialog().show(requireActivity().supportFragmentManager, "stats dialog")
+        }
+
+        binding.btnProfileFilter.setOnClickListener {
+            Repository.parseDoneTestsInfo(listOfDoneTests) {
+                FilterDialog(it, listOfDoneTests) { _, filteredResponseInfoModels ->
+                    binding.recyclerProfileFinishedTests.adapter = FinishedTestsAdapter(filteredResponseInfoModels!!)
+                }
+                    .show(requireActivity().supportFragmentManager, "filter dialog")
+            }
         }
 
         return binding.root
